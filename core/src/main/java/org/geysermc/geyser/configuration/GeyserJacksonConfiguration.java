@@ -46,6 +46,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -68,6 +69,8 @@ public abstract class GeyserJacksonConfiguration implements GeyserConfiguration 
     private String floodgateKeyFile = "key.pem";
 
     public abstract Path getFloodgateKeyPath();
+
+    private SplitscreenConfiguration splitscreen = new SplitscreenConfiguration();
 
     @JsonProperty("command-suggestions")
     private boolean commandSuggestions = true;
@@ -322,6 +325,24 @@ public abstract class GeyserJacksonConfiguration implements GeyserConfiguration 
             }
         }
     }
+
+        @Getter
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class SplitscreenConfiguration implements ISplitscreenConfiguration {
+        private boolean enabled = false;
+        private Map<String, SplitscreenUserInfo> users = new HashMap<>();
+    }
+    @Getter
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class SplitscreenUserInfo implements ISplitscreenUserInfo {
+        @AsteriskSerializer.Asterisk()
+        @JsonProperty("bedrock-username")
+        private String bedrockUsername;
+        @AsteriskSerializer.Asterisk()
+        @JsonProperty("xuid")
+        private String xuid;
+    }
+
 
     @JsonProperty("scoreboard-packet-threshold")
     private int scoreboardPacketThreshold = 10;
