@@ -52,6 +52,8 @@ public interface GeyserConfiguration {
 
     List<String> getSavedUserLogins();
 
+    ISplitscreenConfiguration getSplitscreen();
+
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     boolean isCommandSuggestions();
 
@@ -159,6 +161,23 @@ public interface GeyserConfiguration {
         }
 
         void setAuthType(AuthType authType);
+    }
+    
+    interface ISplitscreenConfiguration {
+        boolean isEnabled();
+        /**
+         * Will be removed after splitscreen XUID bug in consoles is fixed
+         */
+        @Deprecated
+        Map<String, ? extends ISplitscreenUserInfo> getUsers();
+    }
+    /**
+     * Will be removed after splitscreen XUID bug in consoles is fixed
+     */
+    @Deprecated
+    interface ISplitscreenUserInfo {
+        String getBedrockUsername();
+        String getXuid();
     }
 
     interface IMetricsInfo {
